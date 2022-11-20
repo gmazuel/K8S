@@ -1,0 +1,82 @@
+kubectl run my2-nginx --image=nginx
+kubectl describe pods/my2-nginx
+kubectl describe pods/my2-nginx
+kubectl exec my2-nginx -- ls -ltr
+kubectl exec my2-nginx -it -- bash
+kubectl logs -f my-apache
+kubectl logs --tail=-1 my-apache
+kubectl proxy
+	http://localhost:8001/healthz
+	http://localhost:8001/version
+kubectl expose pods my-apache --port=80 --name=my-apache-svc --type=LoadBalancer
+kubectl port-forward my-apache 9999:80
+kubectl get pods
+kubectl get pods/nginx -o yaml
+kubectl get svc
+
+DOCKER
+docker commit --change='CMD ["apache2ctl", "-D FOREGROUND"]' -c "EXPOSE 80" 2910accf2913 apache2:1
+
+
+
+# CREAR UNA IMGAEN A PARTIR DE UN DOCKERFILE (Dockerfile.yaml)
+ docker build -t gmazuel/nginx:v2 .
+
+# Probar la imagen antes de usarla y de subirla a github
+docker run -d -p 80:80 --name nginx gmazuel/nginx:v2
+
+# Detener el contenedor de prueba antes de pasarlo a Kubernetes
+docker stop nginx
+
+# Brrar el contenedor antes de pasarlo a kubernetes
+docker delete nginx
+
+# Subir la imagen a docker hub
+docker push gmazuel/nginx:v2
+
+# Crear un yaml con el manifiesto de kubernetes tipo pods o mejor deployments
+# Crear el pods a partir de un manifiesto tipo pods
+kubectl create -f nginx.yaml
+
+# Ver la configración del pods
+kubectl get pod/nginx -o yaml > export_pods.yaml
+kubectl describe pods/nginx
+
+# Crear el servicio para acceder el  pods (ClusterIP, NodePort, LoadBalancer)
+kubectl expose pod nginx --name nginx-svc --port=80 --type=LoadBalancer
+# El port 80 es el puerto del servivio que esta en PODS y if not node port kubectl apply one
+kubectl expose deploy apache1 --port 80 --type NodePort
+
+# Probar
+curl localhost
+
+# Detener el pods y debe ser auto generado
+kubectl delete svc/nginx-svc
+docker delete pods/nginx -grace-period=5
+
+# ¿Como cambiar de version de imagen sin perder servicio? con apply
+
+# Componentes de un yaml de un pods
+# Objeto
+# Spec (Configuracion deseada)
+# Status ( Como se encuentra el pods)
+
+# Actualiza la configuración al pods enlinea
+kubectl apply -f nginx.yaml
+
+# RestartPolicy: Always, never or onFailure
+
+# Labels
+kubectl get pods --show-labels -l responsable=pedro
+kubectl get pods --show-labels -l 'estado in (desarrollo,testing)'
+kubectl delete  pods -l 'estado in (desarrollo,testing, produccion)'
+
+# Escalado en Kubernetes
+kubectl scale deploy nginx-d --replicas=3
+ kubectl scale deploy --replicas=2 -l estado=1 # Sin identificar el deployment solo identificando el label
+ 
+ 
+ # Como usar los namespaces
+ # como funcionan los selectors
+ # como crear archivos YML con buenas practicas
+
