@@ -25,6 +25,8 @@ git commit -am
 git remote remove origin 
 # Agrega el nuevo repositorio 
 git remote add origin git@github.com:gmazuel/NOMBRE.git
+# Elimina el destino configurado
+git remote remove origin
 # Agrega los archivos al nuevo repositori
 git push -u origin main
 		
