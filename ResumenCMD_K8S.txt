@@ -79,4 +79,3 @@ kubectl scale deploy nginx-d --replicas=3
  # Como usar los namespaces
  # como funcionan los selectors
  # como crear archivos YML con buenas practicas
-
