@@ -1,0 +1,33 @@
+# Inicia  Repositorio
+git init
+	
+# Clona el repo 
+git clone <url>
+
+# Añade archivs a git
+git add ARCHIVOS
+	
+# Resetea los archivos agregados
+git reset .
+	
+# Confirma los archivos a publicar al repositorio
+git commit -m "COMENTARIO"
+
+git checkout -- .
+git log
+git commit --amend
+git checkout -b NOMBRE-RAMA
+git checkout master
+git branch -d rama-heroes
+git push
+git commit -am
+# Elimina el repositorio configurado atualmente 
+git remote remove origin 
+# Agrega el nuevo repositorio 
+git remote add origin git@github.com:gmazuel/NOMBRE.git
+# Agrega los archivos al nuevo repositori
+git push -u origin main
+		
+	
+git config --global user.name "NOMBRE"
+git config --global user.email EMAIL
