@@ -13,30 +13,30 @@ kubectl proxy
 	http://localhost:8001/version
 
 # DEPLOYMENT (se crean Deployment, replicaset y pods)
-
-kubectl create deployment NOMBRE_DEPLOY --image=IMAGEN
-kubectl get replicaset[rs]
-kubectl get pods -o wide # Permite extender la informacion con -o wide
-kubectl get deploy
+	#IMPERATIVO
+		kubectl create deployment NOMBRE_DEPLOY --image=IMAGEN
+		kubectl get replicaset[rs]
+		kubectl get pods -o wide # Permite extender la informacion con -o wide
+		kubectl get deploy
 
 	# Escalar un deploy
 		kubectl scale deploy NOMBRE_DEPLOY --replicas=[ENTERO]	
 
-	# Si tiene un YAML
+	# Si tiene un YAML se crea DECLARATIVAMENTE
 		kubectl create|apply -f NOMBRE.yaml
 
 # SERVICIOS (NodePort, LoadBalacer, ClusterIP
 # Crea un servicio para el pods my-apache
 
-kubectl expose pods my-apache --port=80 --name=my-apache-svc --type=LoadBalancer
+	kubectl expose pods my-apache --port=80 --name=my-apache-svc --type=LoadBalancer
 
-# Verifica el estado del servicio
+	# Verifica el estado del servicio
 
-kubectl get svc
+	kubectl get svc
 
-kubectl port-forward my-apache 9999:80
-kubectl get pods -o wide
-kubectl get pods/nginx -o yaml
+	kubectl port-forward my-apache 9999:80
+	kubectl get pods -o wide
+	kubectl get pods/nginx -o yaml
 
 DOCKER
 docker commit --change='CMD ["apache2ctl", "-D FOREGROUND"]' -c "EXPOSE 80" 2910accf2913 apache2:1
