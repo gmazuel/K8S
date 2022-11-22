@@ -1,0 +1,10 @@
+apiVersion:
+kind:
+
+metadata:
+        name:
+        label:
+spec:
+        replicas:
+        selector:
+        template:
