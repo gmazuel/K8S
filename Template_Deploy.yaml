@@ -3,8 +3,12 @@ kind:
 
 metadata:
         name:
-        label:
+        labels:
 spec:
         replicas:
         selector:
+                matchLabels:
+                        app:
         template:
+        strategy:
+                type: (RollingUpdate|Recreate|canary|a/b testing)
