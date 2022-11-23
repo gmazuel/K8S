@@ -11,4 +11,4 @@ spec:
                         app:
         template:
         strategy:
-                type: (RollingUpdate|Recreate|canary|a/b testing)
+                type: (RollingUpdate|Recreate|canary|a/b testing) # https://github.com/ContainerSolutions/k8s-deployment-strategies
