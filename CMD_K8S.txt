@@ -1,5 +1,8 @@
 # PODS
+
 kubectl run my2-nginx --image=nginx # Esto crea un pod llamado my2-nginx
+kubectl get pods/nginx -o yaml # Obtienen información de un pods y con -o lo exporta a yaml 
+kubectl get pods -o wide # con la opcion wide s obtiene información adicional 
 kubectl describe pods/my2-nginx
 kubectl exec my2-nginx -- ls -ltr
 kubectl exec my2-nginx -it -- bash
@@ -7,6 +10,7 @@ kubectl logs -f my2-nginx
 kubectl logs --tail=-1 my2-nginx
 kubectl decribe pods NOMBRE
 kubectl delete pods/my2-nginx
+
 
 kubectl proxy
 	http://localhost:8001/healthz
@@ -21,12 +25,26 @@ kubectl proxy
 
 	# Escalar un deploy
 		kubectl scale deploy NOMBRE_DEPLOY --replicas=[ENTERO]	
+		kubectl scale deploy --replicas=2 -l NOMBRELABEL=VALOR # Sin identificar el deployment solo identificando el LABEL
 
 	# Si tiene un YAML se crea DECLARATIVAMENTE
 		kubectl create|apply -f NOMBRE.yaml
 
 # SERVICIOS (NodePort, LoadBalacer, ClusterIP
-# Crea un servicio para el pods my-apache
+
+	# Crear el servicio para acceder el  pods (ClusterIP (sino se declara), NodePort, LoadBalancer)
+	
+	kubectl expose pod nginx --name nginx-svc --port=80 --type=LoadBalancer
+
+	# El port 80 es el puerto del servivio que esta en PODS y if not node port kubectl apply one
+	
+	kubectl expose deploy apache1 --port 80 --type NodePort
+
+	# Probar
+	
+	curl localhost
+
+	# Crea un servicio para el pods my-apache
 
 	kubectl expose pods my-apache --port=80 --name=my-apache-svc --type=LoadBalancer
 
@@ -34,9 +52,7 @@ kubectl proxy
 
 	kubectl get svc
 
-	kubectl port-forward my-apache 9999:80
-	kubectl get pods -o wide
-	kubectl get pods/nginx -o yaml
+kubectl port-forward my-apache 9999:80
 
 DOCKER
 docker commit --change='CMD ["apache2ctl", "-D FOREGROUND"]' -c "EXPOSE 80" 2910accf2913 apache2:1
@@ -63,15 +79,6 @@ kubectl create -f nginx.yaml
 # Ver la configración del pods
 kubectl get pod/nginx -o yaml > export_pods.yaml
 kubectl describe pods/nginx
-
-# Crear el servicio para acceder el  pods (ClusterIP, NodePort, LoadBalancer)
-kubectl expose pod nginx --name nginx-svc --port=80 --type=LoadBalancer
-
-# El port 80 es el puerto del servivio que esta en PODS y if not node port kubectl apply one
-kubectl expose deploy apache1 --port 80 --type NodePort
-
-# Probar
-curl localhost
 
 # Detener el pods y debe ser auto generado
 kubectl delete svc/nginx-svc
