@@ -54,24 +54,6 @@ kubectl proxy
 
 kubectl port-forward my-apache 9999:80
 
-DOCKER
-docker commit --change='CMD ["apache2ctl", "-D FOREGROUND"]' -c "EXPOSE 80" 2910accf2913 apache2:1
-
-# CREAR UNA IMGAEN A PARTIR DE UN DOCKERFILE (Dockerfile.yaml)
- docker build -t gmazuel/nginx:v2 .
-
-# Probar la imagen antes de usarla y de subirla a github
-docker run -d -p 80:80 --name nginx gmazuel/nginx:v2
-
-# Detener el contenedor de prueba antes de pasarlo a Kubernetes
-docker stop nginx
-
-# Brrar el contenedor antes de pasarlo a kubernetes
-docker delete nginx
-
-# Subir la imagen a docker hub
-docker push gmazuel/nginx:v2
-
 # Crear un yaml con el manifiesto de kubernetes tipo pods o mejor deployments
 # Crear el pods a partir de un manifiesto tipo pods
 kubectl create -f nginx.yaml
